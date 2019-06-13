@@ -1,0 +1,267 @@
+﻿@model IEnumerable<BezoekersDashboard.Models.Visitors>
+
+@{
+    ViewData["Title"] = "Visit_Origin";
+}
+
+<h1>Visit_Origin</h1>
+
+<div class="data_holder">
+    <partial name="_Navbar">
+    <div class="chart_holder" width="400" height="200">
+        <canvas id="visitorbarchart" class="chart"></canvas>
+    </div>
+    <div class="chart_holder" width="400" height="200">
+        <canvas id="visitorlinechart" class="chart"></canvas>
+    </div>
+    <div></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Zipcode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int count = 0;
+            }
+
+            @foreach (var item in Model)
+            {
+                count++;
+
+                @if (count < 5)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Zipcode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr style="visibility: collapse;">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Zipcode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+    </table>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script>
+    (function ($) {
+
+        var visitorbarchart = document.getElementById("visitorbarchart").getContext('2d');
+        var visitorlinechart = document.getElementById("visitorlinechart").getContext('2d');
+                        @{
+                            var input_year = ViewData["input_year"];
+                            var input_month = ViewData["input_month"];
+                            var input_day = ViewData["input_date"];
+
+                            List<object> ls = new List<object>();
+                            var labelstring = "";
+                            List<int> lsdata = new List<int>();
+
+                            if (input_year == null && input_month == null && input_day == null)
+                            {
+                                foreach (var value in Model)
+                                {
+                                    if (ls.Contains(value.Date.Year))
+                                    {
+                                        var index = ls.IndexOf(value.Date.Year);
+                                        lsdata[index] += value.Amount;
+                                    }
+                                    else
+                                    {
+                                        ls.Add(value.Date.Year);
+                                        if (labelstring == "")
+                                        {
+                                            lsdata.Add(value.Amount);
+                                            labelstring = value.Date.Year.ToString();
+                                        }
+                                        else
+                                        {
+                                            lsdata.Add(value.Amount);
+                                            labelstring += " " + value.Date.Year.ToString();
+                                        }
+                                    }
+                                }
+                            }else
+                            {
+                                if(input_year != null)
+                                {
+                                    foreach (var value in Model)
+                                    {
+                                        if (ls.Contains(value.Date.Month))
+                                        {
+                                            var index = ls.IndexOf(value.Date.Month);
+                                            lsdata[index] += value.Amount;
+                                        }
+                                        else
+                                        {
+                                            ls.Add(value.Date.Month);
+                                            if (labelstring == "")
+                                            {
+                                                lsdata.Add(value.Amount);
+                                                labelstring = value.Date.Month.ToString();
+                                            }
+                                            else
+                                            {
+                                                lsdata.Add(value.Amount);
+                                                labelstring += " " + value.Date.Month.ToString();
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if(input_month != null)
+                                {
+                                    foreach (var value in Model)
+                                    {
+                                        if (ls.Contains(value.Date.Day))
+                                        {
+                                            var index = ls.IndexOf(value.Date.Day);
+                                            lsdata[index] += value.Amount;
+                                        }
+                                        else
+                                        {
+                                            ls.Add(value.Date.Day);
+                                            if (labelstring == "")
+                                            {
+                                                lsdata.Add(value.Amount);
+                                                labelstring = value.Date.Day.ToString();
+                                            }
+                                            else
+                                            {
+                                                lsdata.Add(value.Amount);
+                                                labelstring += " " + value.Date.Day.ToString();
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if(input_day != null)
+                                {
+                                    foreach (var value in Model)
+                                    {
+                                        if (ls.Contains(value.Date.Hour))
+                                        {
+                                            var index = ls.IndexOf(value.Date.Hour);
+                                            lsdata[index] += value.Amount;
+                                        }
+                                        else
+                                        {
+                                            ls.Add(value.Date.Hour);
+                                            if (labelstring == "")
+                                            {
+                                                lsdata.Add(value.Amount);
+                                                labelstring = value.Date.Hour.ToString();
+                                            }
+                                            else
+                                            {
+                                                lsdata.Add(value.Amount);
+                                                labelstring += " " + value.Date.Hour.ToString();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            var datastring = "";
+                            foreach (var value in lsdata)
+                            {
+                                if (datastring == "")
+                                {
+                                    datastring = value.ToString();
+                                }else
+                                {
+                                    datastring += " " + value.ToString();
+                                }
+                            }
+                        }
+        var dataobject = @Json.Serialize(datastring);
+        var labelobject = @Json.Serialize(labelstring);
+        var dataar = dataobject.split(" ");
+        var labelar = labelobject.split(" ");
+        var data = ["test", "123"];
+        //arstring = "'" + arstring;
+        //var stringar = [arstring.split(", ")];
+        console.log(dataar);
+        var chartdata = {
+            labels: labelar,
+                datasets: [
+                    {
+                        fillColor: "rgba(220,220,220,0.8)",
+                        strokeColor: "rgba(220,220,220,0.8)",
+                        highlightFill: "rgba(220,220,220,0.75)",
+                        highlightStroke: "rgba(220,220,220,1)",
+                        data: dataar
+                    }
+                ]
+
+            };
+
+        var visitorbarchart = new Chart(visitorbarchart,{
+            type: 'bar',
+            data: chartdata,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var visitorlinechart = new Chart(visitorlinechart, {
+            type: 'line',
+            data: chartdata,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+    }(jQuery))
+    </script>
+</div>

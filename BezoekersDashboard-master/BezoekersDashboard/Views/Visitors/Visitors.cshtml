@@ -1,0 +1,84 @@
+﻿@model IEnumerable<BezoekersDashboard.Models.Visitors>
+@{
+    
+
+}
+
+<h1>Visitors</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<script src="~/js/Chart.js"></script>
+<p> 
+    <div>
+        @foreach(var value in Model)
+        {
+            <div>@value.Date</div>
+        }
+    </div>
+    <table>
+        <tr>
+            <th>Jaartal</th>
+            <th>January</th>
+            <th>February</th>
+            <th>Maart</th>
+        </tr>
+        <tr>
+            @{ 
+                foreach (var value in Model)
+                {
+                    <td>@value.Date</td>
+                }
+            }            
+        </tr>
+    </table>
+    <div class="chart_holder">
+    <canvas id="mycanvas" class="chart" width="400" height="400"></canvas>
+    </div>
+    <div id='map' style='width: 400px; height: 300px;'></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZDI1MjIxNSIsImEiOiJjanZud252d3QxbXMwNDNuemVzNGR1OXd4In0.buef45ACfL9QD2pc8nXWsA';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+        });
+    </script>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Zipcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zipcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

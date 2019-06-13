@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Create";
+    
+}
+
+<h1>Items</h1>
+
+<h4>Parking</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @foreach (var item in ViewBag.data)
+        {
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Naam
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Datum
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@item.ParkingName</td>
+                        <td>@item.Amount</td>
+                        <td>@item.Date</td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+        </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

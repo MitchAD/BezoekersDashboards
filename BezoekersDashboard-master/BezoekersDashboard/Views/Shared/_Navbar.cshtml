@@ -1,0 +1,97 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div id="filter_holder">
+    <div id="filter_nav_holder">
+        @if (ViewData["input_year"] != null)
+        {
+            <button id="btn_year" class="nav_btn nav_active" filter_id="input_year">Jaar</button>
+            <input type="text" id="input_year" class="nav_input nav_active" value="@ViewData["input_year"]"/>
+        }
+        else
+        {
+            <button id="btn_year" class="nav_btn" filter_id="input_year">Jaar</button>
+            <input type="text" id="input_year" class="nav_input" />
+        }
+
+        @if (ViewData["input_month"] != null)
+        {
+            <button id="btn_month" class="nav_btn nav_active" filter_id="input_month">Maand</button>
+            <input type="text" id="input_month" class="nav_input nav_active" value="@ViewData["input_month"]"/>
+        }
+        else
+        {
+            <button id="btn_month" class="nav_btn" filter_id="input_month">Maand</button>
+            <input type="text" id="input_month" class="nav_input" />
+        }
+
+        @if (ViewData["input_date"] != null)
+        {
+            <button id="btn_day" class="nav_btn nav_active" filter_id="input_date">Dag</button>
+            <input type="date" id="input_date" class="nav_input nav_active" value="@ViewData["input_date"]" />
+        }
+        else
+        {
+            <button id="btn_day" class="nav_btn" filter_id="input_date">Dag</button>
+            <input type="date" id="input_date" class="nav_input" />
+        }
+
+        @if (ViewData["input_zipcode"] != null)
+        {
+            <button id="btn_zipcode" class="nav_toggle_btn nav_active" filter_id="input_zip">Postcode</button>
+            <input type="text" id="input_zip" class="nav_active" value="@ViewData["input_zipcode"]" />
+        }
+        else
+        {
+            <button id="btn_zipcode" class="nav_toggle_btn" filter_id="input_zip">Postcode</button>
+            <input type="text" id="input_zip" />
+        }
+
+    </div>
+    <div id="filter_input_holder">
+    </div>
+    <div id="filter_submit_holder">
+        <button id="submit_filter">Search</button>
+    </div>
+</div>
+<script>
+        //interactive filter bar script for search
+        (function ($) {
+            $(document).ready(function () {
+                $('body').off('click', '.nav_btn').on('click', '.nav_btn', function () {
+                    $('.nav_btn').each(function () {
+                        $(this).removeClass('nav_active');
+                    })
+                    $(this).addClass('nav_active');
+                    var filter_id = $(this).attr('filter_id');
+                    $('.nav_input').each(function () {
+                        $(this).removeClass('nav_active')
+                    })
+                    $('#' + filter_id).addClass('nav_active');
+                })
+
+                //interaction for filtering on zipcodes
+                $('body').off('click', '.nav_toggle_btn').on('click', '.nav_toggle_btn', function () {
+
+                    var filter_id = $(this).attr('filter_id');
+                    if ($('#' + filter_id).hasClass('nav_active')) {
+                        $('#' + filter_id).removeClass('nav_active');
+                        $(this).removeClass('nav_active')
+                    } else {
+                        $('#' + filter_id).addClass('nav_active');
+                        $(this).addClass('nav_active')
+                    }
+                });
+
+                $('body').off('click', '#submit_filter').on('click', '#submit_filter', function () {
+                    var values = "";
+                    var value = "";
+                    $('input.nav_active').each(function () {
+                        value = $(this).val();
+                        values += "/" + $(this).attr('id') + "/" + value;
+                    });
+                    window.location.replace("/Visitors" + values);
+                });
+            });
+        }(jQuery));
+</script>

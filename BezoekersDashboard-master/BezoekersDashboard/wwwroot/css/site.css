@@ -1,0 +1,247 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  /* position: absolute; */
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.nav_link, .nav_button {
+  text-decoration: none;
+  color:black;
+  padding: 10px;
+  display: inline-block;
+  /* padding-right: 20px; */
+}
+
+.nav_link {
+  width: 100%;
+}
+
+.nav_main {
+  text-align: center;
+}
+
+.link_group {
+  display: grid;
+  grid-template-areas: ".nav_main div";
+}
+
+.nav_button {
+  border: none;
+  background: transparent;
+}
+
+
+
+.collapse_link.show {
+  border: 1px solid black;
+  border-right: none;
+  display: inline-block;
+  /* position: fixed; */
+}
+
+.collapse_link.collapsing {
+  border: 1px solid black;
+  border-right: none;
+  display: inline-block;
+  /* position: fixed; */
+}
+
+.nav_link:hover, .nav_button:hover {
+  text-decoration: underline;
+}
+
+.nav_item {
+  list-style-type: none;
+  /* margin-top: 10px; */
+}
+
+/* .nav_item:hover {
+  background: whitesmoke;
+} */
+
+#dash_body {
+  display: grid;
+  grid-template-columns: 180px auto;
+  grid-template-rows: auto 60px;
+  margin-bottom: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#dash_body header {
+  width: 100%;
+  box-shadow: 0px 0.25rem 0.75rem rgba(0,0,0,0.05);
+  border-right: 1px solid #dee2e6 !important;
+  height: 100%;
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+.title_link {
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1rem;
+    font-size: 1.15rem;
+    width: 100%;
+    text-align: left;
+    padding-left: 15%;
+    /*box-shadow: 0px 0.25rem 0.75rem rgba(0,0,0,0.05);*/
+    /*border-bottom: 1px solid #dee2e6 !important; */
+    /* line-height: inherit; */
+    white-space: nowrap;
+}
+
+.title_link, .action_nav {
+    height: 60px;
+    background: #fff;
+    box-shadow: 0px 0.25rem 0.75rem rgba(0,0,0,0.05);
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.hb_grid {
+    height: 100%; 
+    display: grid;
+    grid-template-rows: 60px auto;
+}
+
+.title_link:hover {
+    text-decoration: none;
+}
+
+.chart_holder {
+    width: 100%;
+    display: inline-block;
+    min-width: 300px;
+    min-height: 150px;
+    grid-row-start: 2;
+    margin: auto;
+    margin-bottom: 0;
+}
+
+.custom_map {
+    display: inline-block;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column: 3;
+    margin: auto;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.custom_table {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.data_holder {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+}
+
+.nav_btn.nav_active {
+   background-color: lawngreen;
+}
+
+.nav_toggle_btn.nav_active {
+    background-color: yellow;
+}
+
+.nav_input.nav_active {
+    visibility: visible;
+    position: inherit;
+}
+
+.nav_input {
+    visibility: hidden;
+    position: absolute;
+}
+
+#input_zip { 
+    visibility: hidden;
+    position: absolute;
+}
+
+#input_zip.nav_active {
+    visibility: visible;
+    position: inherit;
+}
+
+#filter_input_holder {
+    display: inline-block;
+}
+
+#filter_nav_holder {
+    display: inline-block;
+}
+
+#submit_filter {
+    display: inline-block;
+}
+
+#filter_submit_holder {
+    display: inline-block;
+}
+
+#filter_holder {
+    display: grid;
+    grid-template-columns: auto auto 61px;
+    grid-column-start: 1;
+    grid-column-end: 3;
+
+}

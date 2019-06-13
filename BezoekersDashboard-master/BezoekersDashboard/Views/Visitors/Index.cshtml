@@ -1,0 +1,168 @@
+﻿@model IEnumerable<BezoekersDashboard.Models.Visitors>
+
+@{
+
+
+}
+
+<h1>Visitors</h1>
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<script src="~/js/Chart.js"></script>
+<p>
+    <div class="data_holder">
+        <partial name="_Navbar">
+        <div class="chart_holder" width="400" height="200">
+            <canvas id="visitorbarchart" class="chart"></canvas>
+        </div>
+        <div class="chart_holder" width="400" height="200">
+            <canvas id="visitorlinechart" class="chart"></canvas>
+        </div>
+        <div id='map' class="custom_map" style='width: 400px; height: 300px;'></div>
+        <table class="table custom_table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Zipcode)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var table_value_ar = new Dictionary<string, int>();
+                    foreach (var item in Model)
+                    {
+                        if (!(table_value_ar.ContainsKey(item.Zipcode)))
+                        {
+                            table_value_ar.Add(item.Zipcode, item.Amount);
+                        }
+                        else
+                        {
+                            table_value_ar[item.Zipcode] += item.Amount;
+                        }
+                    }
+                }
+                @foreach (var table_value in table_value_ar)
+                {
+                    <tr>
+                        <td>
+                            @table_value.Value
+                        </td>
+                        <td>
+                            <a href="Visitors/GetZip/@table_value.Key">@table_value.Key</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZDI1MjIxNSIsImEiOiJjanZud252d3QxbXMwNDNuemVzNGR1OXd4In0.buef45ACfL9QD2pc8nXWsA';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [4.4126, 51.5094],
+            zoom: 11
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script>
+        (function ($) {
+
+            var visitorbarchart = document.getElementById("visitorbarchart").getContext('2d');
+            var visitorlinechart = document.getElementById("visitorlinechart").getContext('2d');
+                           @{ 
+                               List<object> ls = new List<object>();
+                               var labelstring = "";
+                               List<int> lsdata = new List<int>();
+                               foreach (var value in Model)
+                               {
+                                   if (ls.Contains(value.Zipcode)) {
+                                       var index = ls.IndexOf(value.Zipcode);
+                                       lsdata[index] += value.Amount;
+                                   } else
+                                   {
+                                       ls.Add(value.Zipcode);
+                                       if (labelstring == "")
+                                       {
+                                           lsdata.Add(value.Amount);
+                                           labelstring = value.Zipcode.ToString();
+                                       }else
+                                       {
+                                           lsdata.Add(value.Amount);
+                                           labelstring += " " + value.Zipcode.ToString();
+                                       }
+                                   }
+                               }
+
+                               var datastring = "";
+                               foreach (var value in lsdata)
+                               {
+                                   if (datastring == "")
+                                   {
+                                       datastring = value.ToString();
+                                   }else
+                                   {
+                                       datastring += " " + value.ToString();
+                                   }
+                               }
+                           }
+            var dataobject = @Json.Serialize(datastring);
+            var labelobject = @Json.Serialize(labelstring);
+            var dataar = dataobject.split(" ");
+            var labelar = labelobject.split(" ");
+            var data = ["test", "123"];
+            //arstring = "'" + arstring;
+            //var stringar = [arstring.split(", ")];
+            console.log(dataar);
+            var chartdata = {
+                labels: labelar,
+                    datasets: [
+                        {
+                            fillColor: "rgba(220,220,220,0.8)",
+                            strokeColor: "rgba(220,220,220,0.8)",
+                            highlightFill: "rgba(220,220,220,0.75)",
+                            highlightStroke: "rgba(220,220,220,1)",
+                            data: dataar
+                        }
+                    ]
+                    
+                };
+
+            var visitorbarchart = new Chart(visitorbarchart,{
+                type: 'bar',
+                data: chartdata,
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            var visitorlinechart = new Chart(visitorlinechart, {
+                type: 'line',
+                data: chartdata,
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+        }(jQuery))
+    </script>
+</p>
